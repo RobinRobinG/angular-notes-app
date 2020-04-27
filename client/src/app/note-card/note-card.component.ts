@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, Renderer2, Input } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, Renderer2, Input, Output, EventEmitter } from '@angular/core';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -11,6 +11,9 @@ export class NoteCardComponent implements AfterViewInit {
 
   @Input('title') title: string;
   @Input('body') body: string;
+  @Input('link') link: string;
+
+  @Output('delete') deleteEvent: EventEmitter<void> = new EventEmitter<void>();
 
   @ViewChild('truncator') truncator: ElementRef<HTMLElement>;
   @ViewChild('bodyText') bodyText: ElementRef<HTMLElement>;
@@ -26,5 +29,9 @@ export class NoteCardComponent implements AfterViewInit {
     } else {
       this.renderer.setStyle(this.truncator.nativeElement, 'display', 'none');
     }
+  }
+
+  onXButtonClick() {
+    this.deleteEvent.emit();
   }
 }
